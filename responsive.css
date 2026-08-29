@@ -1,0 +1,68 @@
+/* =========================================================================
+   Country Explorer — responsive breakpoints
+   Desktop-first content, with sensible collapse points rather than an
+   exhaustive breakpoint list.
+   ========================================================================= */
+
+/* ---- Laptop / small desktop ---- */
+@media (max-width: 1080px) {
+  .results-grid, .skeleton-grid, .favorites-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-grid { grid-template-columns: 1fr 1fr; }
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ---- Tablet ---- */
+@media (max-width: 860px) {
+  .flow { grid-template-columns: 1fr 1fr; }
+
+  .main-nav {
+    position: fixed;
+    top: var(--header-height);
+    left: 0; right: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    flex-direction: column;
+    padding: var(--space-3);
+    gap: 0;
+    transform: translateY(-8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition), transform var(--transition);
+  }
+  .main-nav.is-open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .nav-link { width: 100%; justify-content: flex-start; padding: var(--space-3); }
+  .mobile-only { display: inline-flex; }
+
+  .detail-panel { width: 100%; }
+}
+
+/* ---- Mobile ---- */
+@media (max-width: 620px) {
+  .header-inner { padding: 0 var(--space-4); gap: var(--space-3); }
+  .brand__wordmark { font-size: 0.98rem; }
+  main { padding: 0 var(--space-4) var(--space-7); }
+
+  .hero { padding: var(--space-6) 0 var(--space-6); }
+  .hero__coord { display: none; }
+
+  .search-form { flex-direction: column; }
+  .search-form__field { min-width: 0; }
+  .search-form .btn { width: 100%; }
+
+  .flow { grid-template-columns: 1fr; }
+
+  .results-grid, .skeleton-grid, .favorites-grid { grid-template-columns: 1fr; }
+  .about-grid { grid-template-columns: 1fr; }
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .kv-grid { grid-template-columns: 1fr; }
+
+  .detail-header { flex-wrap: wrap; }
+  .detail-panel__body { padding: 0 var(--space-4) var(--space-6); }
+
+  .explore-toolbar { top: var(--header-height); }
+  .search-form--compact { flex-direction: column; }
+}
