@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Country Explorer — Discover countries. Explore the data.</title>
+<meta name="description" content="Search live country data — capitals, currencies, languages, borders, and more — powered by the REST Countries API." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧭</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/styles.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<div class="graticule" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <button class="brand" type="button" data-nav="home" aria-label="Country Explorer — go to home">
+      <span class="brand__mark" aria-hidden="true">⟡</span>
+      <span class="brand__wordmark">Country<span class="brand__accent">Explorer</span></span>
+    </button>
+
+    <nav class="main-nav" id="main-nav" aria-label="Primary">
+      <button type="button" class="nav-link" data-nav="home">Home</button>
+      <button type="button" class="nav-link" data-nav="explore">Explore</button>
+      <button type="button" class="nav-link" data-nav="favorites">
+        Favorites <span class="nav-badge" id="favorites-count" hidden>0</span>
+      </button>
+      <button type="button" class="nav-link" data-nav="about">About</button>
+    </nav>
+
+    <div class="header-actions">
+      <button type="button" id="theme-toggle" class="icon-button" aria-pressed="false" aria-label="Switch to dark mode">
+        <svg class="icon icon--sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+        <svg class="icon icon--moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/></svg>
+      </button>
+      <button type="button" id="mobile-nav-toggle" class="icon-button mobile-only" aria-expanded="false" aria-controls="main-nav" aria-label="Open menu">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main-content">
+
+  <!-- ============================= HOME ============================= -->
+  <section class="view view--home" id="view-home" data-view="home">
+    <section class="hero">
+      <div class="hero__grid" aria-hidden="true">
+        <span class="hero__coord hero__coord--1">51.48° N, 0.00°</span>
+        <span class="hero__coord hero__coord--2">35.68° N, 139.69° E</span>
+        <span class="hero__coord hero__coord--3">-33.86° S, 151.20° E</span>
+      </div>
+      <p class="eyebrow">Live data · REST Countries API</p>
+      <h1 class="hero__title">Country Explorer</h1>
+      <p class="hero__subtitle">Discover the world through data.</p>
+      <p class="hero__lede">
+        Explore countries, capitals, regions, currencies, languages, populations,
+        borders, and time zones using live country data.
+      </p>
+
+      <form class="search-form search-form--hero" id="search-form-home" role="search" aria-label="Search countries">
+        <label class="sr-only" for="search-input-home">Search countries, capitals, or ISO codes</label>
+        <div class="search-form__field">
+          <svg class="search-form__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+          <input
+            type="search"
+            id="search-input-home"
+            name="q"
+            placeholder="Search countries, capitals, or ISO codes…"
+            autocomplete="off"
+          />
+          <button type="button" class="search-form__clear" data-clear-search hidden aria-label="Clear search">×</button>
+        </div>
+        <button type="submit" class="btn btn--primary">Search</button>
+        <button type="button" class="btn btn--ghost" id="random-country-btn-home">
+          <span class="btn__label">Random Country</span>
+        </button>
+      </form>
+
+      <div class="example-chips">
+        <span class="example-chips__label">Try:</span>
+        <button type="button" class="chip" data-example="India">India</button>
+        <button type="button" class="chip" data-example="Canada">Canada</button>
+        <button type="button" class="chip" data-example="Japan">Japan</button>
+        <button type="button" class="chip" data-example="Brazil">Brazil</button>
+      </div>
+    </section>
+
+    <section class="how-it-works" aria-labelledby="how-it-works-title">
+      <h2 id="how-it-works-title">How it works</h2>
+      <p class="section-lede">
+        Country Explorer doesn't store any country data itself — every search asks
+        the REST Countries API for fresh JSON and turns it into the interface below.
+      </p>
+      <ol class="flow">
+        <li class="flow__step"><span class="flow__label">You search</span><span class="flow__desc">Type a country, capital, or ISO code</span></li>
+        <li class="flow__step"><span class="flow__label">JavaScript requests</span><span class="flow__desc">A signed request goes to api.restcountries.com</span></li>
+        <li class="flow__step"><span class="flow__label">JSON comes back</span><span class="flow__desc">Structured country records, straight from the source</span></li>
+        <li class="flow__step"><span class="flow__label">UI renders</span><span class="flow__desc">Cards and detail views are built from that JSON, live</span></li>
+      </ol>
+    </section>
+  </section>
+
+  <!-- ============================ EXPLORE ============================ -->
+  <section class="view view--explore" id="view-explore" data-view="explore" hidden>
+    <div class="explore-toolbar">
+      <form class="search-form search-form--compact" id="search-form-explore" role="search" aria-label="Search countries">
+        <label class="sr-only" for="search-input-explore">Search countries, capitals, or ISO codes</label>
+        <div class="search-form__field">
+          <svg class="search-form__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="search" id="search-input-explore" name="q" placeholder="Search countries, capitals, or ISO codes…" autocomplete="off" />
+          <button type="button" class="search-form__clear" data-clear-search hidden aria-label="Clear search">×</button>
+        </div>
+        <button type="submit" class="btn btn--primary">Search</button>
+        <button type="button" class="btn btn--ghost" id="random-country-btn-explore">Random</button>
+      </form>
+
+      <div class="recent-searches" id="recent-searches" hidden>
+        <span class="recent-searches__label">Recent:</span>
+        <div class="recent-searches__list" id="recent-searches-list"></div>
+        <button type="button" class="text-button" id="clear-recent-searches">Clear</button>
+      </div>
+    </div>
+
+    <p class="results-summary" id="results-summary" role="status" aria-live="polite"></p>
+
+    <div id="explore-content">
+      <!-- populated by ui.js: empty state / loading skeletons / error / results grid -->
+    </div>
+  </section>
+
+  <!-- ============================ FAVORITES ============================ -->
+  <section class="view view--favorites" id="view-favorites" data-view="favorites" hidden>
+    <h1 class="view-title">Favorites</h1>
+    <p class="section-lede">Countries you've saved for quick access.</p>
+    <div id="favorites-content"></div>
+  </section>
+
+  <!-- ============================== ABOUT ============================== -->
+  <section class="view view--about" id="view-about" data-view="about" hidden>
+    <h1 class="view-title">About Country Explorer</h1>
+
+    <div class="about-grid">
+      <article class="about-card">
+        <h2>What this is</h2>
+        <p>
+          Country Explorer is a small, focused tool for looking up country data —
+          capitals, currencies, languages, borders, memberships, and more — without
+          digging through spreadsheets or Wikipedia infoboxes.
+        </p>
+      </article>
+
+      <article class="about-card">
+        <h2>The data source</h2>
+        <p>
+          Every result comes from the <a href="https://restcountries.com" target="_blank" rel="noopener">REST Countries API</a>,
+          a structured, normalized dataset of 90+ fields per country, reviewed weekly
+          against ISO, UN, and Wikidata sources.
+        </p>
+      </article>
+
+      <article class="about-card">
+        <h2>How the app works</h2>
+        <p>
+          This is a single-page app built with plain HTML, CSS, and JavaScript —
+          no frameworks. A dedicated API layer handles every request; the rest of
+          the app just renders whatever JSON comes back.
+        </p>
+      </article>
+
+      <article class="about-card">
+        <h2>Technologies</h2>
+        <ul class="tech-list">
+          <li>HTML5</li>
+          <li>CSS3 (custom properties, no framework)</li>
+          <li>Vanilla JavaScript (ES modules-free, browser-native)</li>
+          <li>REST Countries API v5</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+</main>
+
+<!-- Slide-over country detail panel, reachable from any view -->
+<div class="detail-scrim" id="detail-scrim" data-close-detail hidden></div>
+<aside class="detail-panel" id="detail-panel" aria-hidden="true" aria-labelledby="detail-country-name" hidden>
+  <button type="button" class="detail-panel__close" id="detail-close-btn" data-close-detail aria-label="Close country details">
+    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+  </button>
+  <div class="detail-panel__body" id="detail-panel-body" tabindex="-1"></div>
+</aside>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<footer class="site-footer">
+  <p>Country Explorer — data via <a href="https://restcountries.com" target="_blank" rel="noopener">REST Countries API</a>. Not affiliated with any government or standards body.</p>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/api.js"></script>
+<script src="js/state.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
