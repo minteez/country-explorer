@@ -30,7 +30,7 @@ const CONFIG = Object.freeze({
   // Replace this with your own REST Countries API key for production use.
   // Get one at https://restcountries.com/sign-up
   // Leave it untouched to run in demo mode.
-  API_KEY: 'rc_live_78729668150b452eb36eb0d75dfeda1a',
+  API_KEY: 'rc_live_a26b0e916f214b1ba788be94a12bf4f1',
 
   // Public, unlimited demo key published by REST Countries. Never treat
   // this as a secret — it's meant to be shared.
